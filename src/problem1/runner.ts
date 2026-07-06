@@ -79,7 +79,10 @@ export function validateCustomInput(raw: string, existing: number[]): Validation
   }
   // Constraint: the result must stay below Number.MAX_SAFE_INTEGER
   if (expectedSum(value) > Number.MAX_SAFE_INTEGER) {
-    return { ok: false, error: 'Result would exceed Number.MAX_SAFE_INTEGER' }
+    return {
+      ok: false,
+      error: 'That number is too large — its sum would exceed the safe integer limit. Please try a smaller value.',
+    }
   }
   return { ok: true, value }
 }

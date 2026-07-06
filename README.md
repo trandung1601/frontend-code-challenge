@@ -54,7 +54,7 @@ frontend-code-challenge/
 ## Problems
 
 - `problem1`: Three ways to sum to `n`, with a Monaco editor, test runner, and custom test cases in [src/problem1](src/problem1)
-- `problem2`: polished token swap UI demo in [src/problem2](src/problem2)
+- `problem2`: polished token swap UI demo with live prices, wallet/network session persistence, and a fully unit-tested component layer in [src/problem2](src/problem2)
 - `problem3`: code review and refactor presentation for a messy React component in [src/problem3](src/problem3)
 
 `problem1` is the most interactive deliverable: users can edit JavaScript
@@ -86,6 +86,12 @@ npm run preview
 
 > `preview` runs a fresh production build before starting the local preview. For
 > iterative development, use `npm run dev` instead so changes reload immediately.
+
+Unit tests are written with [Vitest](https://vitest.dev). Logic tests run in
+the node environment; UI and hook tests (problem 2's modals, swap components,
+hooks, and page gating) run in jsdom with
+[Testing Library](https://testing-library.com), opting in per file via the
+`// @vitest-environment jsdom` pragma.
 
 ## Contribution Guidelines
 

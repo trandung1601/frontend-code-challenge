@@ -92,6 +92,6 @@ describe('validateCustomInput', () => {
   it('rejects n whose result exceeds Number.MAX_SAFE_INTEGER', () => {
     const res = validateCustomInput('200000000', [])
     expect(res.ok).toBe(false)
-    if (!res.ok) expect(res.error).toMatch(/MAX_SAFE_INTEGER/)
+    if (!res.ok) expect(res.error).toMatch(/too large/)
   })
 })

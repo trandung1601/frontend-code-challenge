@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react'
 import { FiArrowDown, FiCheck, FiAlertCircle, FiCreditCard } from 'react-icons/fi'
 import SwapPanel from './SwapPanel'
 import SlippageSelector from './SlippageSelector'
+import SwapDetails from './SwapDetails'
 import TokenSelectModal from '../modals/TokenSelectModal'
 import { formatAmount, type Token } from '../../lib/tokens'
 import type { ConnectedWallet } from '../../lib/wallet'
@@ -185,6 +186,19 @@ export default function Swap99({
           {!connected && <FiCreditCard className="text-[18px]" />}
         </button>
       </div>
+
+      {/* ── Quote details — appear once the user has entered an amount ── */}
+      {connected && amt > 0 && from && to && (
+        <SwapDetails
+          from={from}
+          to={to}
+          rate={rate}
+          receive={receive}
+          slippage={slippage}
+          network={network}
+          tokens={tokens}
+        />
+      )}
 
       {picker && from && to && (
         <TokenSelectModal
