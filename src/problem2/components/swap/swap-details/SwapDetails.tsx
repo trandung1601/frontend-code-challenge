@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { FiChevronDown, FiRepeat } from 'react-icons/fi'
-import RouteComparison from './RouteComparison'
-import { formatAmount, type Token } from '../../lib/tokens'
-import type { Network } from '../../lib/networks'
+import RouteComparison from '../route-comparison/RouteComparison'
+import { formatAmount, type Token } from '../../../lib/tokens'
+import type { Network } from '../../../lib/networks'
 
 // Flat protocol fee taken by the (demo) aggregator, shown as "TX Fee".
 export const TX_FEE_PCT = 0.5

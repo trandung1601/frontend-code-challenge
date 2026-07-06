@@ -4,8 +4,8 @@ import { cleanup, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import '@testing-library/jest-dom/vitest'
 import SwapDetails, { TX_FEE_PCT } from './SwapDetails'
-import type { Token } from '../../lib/tokens'
-import type { Network } from '../../lib/networks'
+import type { Token } from '../../../lib/tokens'
+import type { Network } from '../../../lib/networks'
 
 afterEach(cleanup)
 

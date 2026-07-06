@@ -1,4 +1,4 @@
-import { formatAmount } from '../../lib/tokens'
+import { formatAmount } from '../../../lib/tokens'
 import './RouteComparison.scss'
 
 // Mocked liquidity-aggregator routes, derived from the best available rate.

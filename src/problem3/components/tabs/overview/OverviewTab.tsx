@@ -1,4 +1,4 @@
-import { ISSUES, FLOW_STEPS, CATEGORY_LABELS, CATEGORY_LONG, VERDICT, type Category } from '../../reviewContent'
+import { ISSUES, FLOW_STEPS, CATEGORY_LABELS, CATEGORY_LONG, VERDICT, type Category } from '../../../reviewContent'
 import './OverviewTab.scss'
 
 // Per-category counts + the largest, used to scale the bar widths.

@@ -1,10 +1,7 @@
 import { useState } from 'react'
 import TopBar from './components/layout/TopBar'
 import Hero from './components/layout/Hero'
-import OverviewTab from './components/tabs/OverviewTab'
-import IssuesTab from './components/tabs/IssuesTab'
-import RefactoredTab from './components/tabs/RefactoredTab'
-import ExplanationTab from './components/tabs/ExplanationTab'
+import { ExplanationTab, IssuesTab, OverviewTab, RefactoredTab } from './components/tabs'
 import './Problem3Page.scss'
 
 type Tab = 'overview' | 'issues' | 'refactored' | 'explanation'

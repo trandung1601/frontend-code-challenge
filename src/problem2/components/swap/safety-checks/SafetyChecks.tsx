@@ -1,5 +1,5 @@
 import { FiCheck, FiAlertCircle } from 'react-icons/fi'
-import { formatUsd } from '../../lib/tokens'
+import { formatUsd } from '../../../lib/tokens'
 
 export default function SafetyChecks({
   priceImpact,

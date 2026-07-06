@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react'
 import { FiLock } from 'react-icons/fi'
-import DisclaimerModal from './components/modals/DisclaimerModal'
-import ConnectWalletModal from './components/modals/ConnectWalletModal'
-import Swap99 from './components/swap/Swap99'
+import { ConnectWalletModal, DisclaimerModal } from './components/modals'
+import Swap99 from './components/swap'
 import SwapHistory from './components/history/SwapHistory'
 import PageHeader, { type View } from './components/layout/PageHeader'
 import {

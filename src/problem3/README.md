@@ -266,5 +266,13 @@ problem3/
 ├── highlight.tsx         # lightweight TS syntax highlighter
 └── components/
     ├── layout/           # TopBar, Hero
-    └── tabs/             # Overview, Issues, Refactored, Explanation
+    └── tabs/             # tab entrypoint
+        ├── overview/     # overview tab component and style
+        ├── issues/       # findings tab component and style
+        ├── refactored/   # code comparison tab component and style
+        └── explanation/  # explanation tab component and style
 ```
+
+Each tab folder keeps its `.tsx` and `.scss` files together, while
+`components/tabs/index.ts` is the public import point used by
+[Problem3Page.tsx](./Problem3Page.tsx).

@@ -4,8 +4,8 @@ import { cleanup, fireEvent, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import '@testing-library/jest-dom/vitest'
 import TokenSelectModal from './TokenSelectModal'
-import { NETWORKS } from '../../lib/networks'
-import type { Token } from '../../lib/tokens'
+import { NETWORKS } from '../../../lib/networks'
+import type { Token } from '../../../lib/tokens'
 
 afterEach(cleanup)
 

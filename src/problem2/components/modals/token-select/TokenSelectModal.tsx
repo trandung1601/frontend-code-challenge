@@ -1,10 +1,10 @@
 import { createPortal } from 'react-dom'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { FiSearch, FiX, FiChevronDown } from 'react-icons/fi'
-import TokenIcon from '../ui/TokenIcon'
-import SwitchNetworkModal from './SwitchNetworkModal'
-import { chainOf, formatAmount, formatUsd, type Token } from '../../lib/tokens'
-import { NETWORKS, type Network } from '../../lib/networks'
+import TokenIcon from '../../ui/TokenIcon'
+import SwitchNetworkModal from '../switch-network/SwitchNetworkModal'
+import { chainOf, formatAmount, formatUsd, type Token } from '../../../lib/tokens'
+import { NETWORKS, type Network } from '../../../lib/networks'
 import './TokenSelectModal.scss'
 
 export default function TokenSelectModal({

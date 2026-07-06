@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest'
 import { cleanup, fireEvent, render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom/vitest'
 import SwitchNetworkModal from './SwitchNetworkModal'
-import { NETWORKS } from '../../lib/networks'
+import { NETWORKS } from '../../../lib/networks'
 
 afterEach(cleanup)
 

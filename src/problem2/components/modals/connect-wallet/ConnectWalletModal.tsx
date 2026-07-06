@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
 import { FiX } from 'react-icons/fi'
-import { WALLET_PROVIDERS, type WalletProvider } from '../../lib/wallet'
-import metamaskIcon from '../../assets/wallets/metamask.svg'
-import walletconnectIcon from '../../assets/wallets/walletconnect.svg'
-import phantomIcon from '../../assets/wallets/phantom.svg'
-import coinbaseIcon from '../../assets/wallets/coinbase.svg'
-import trustwalletIcon from '../../assets/wallets/trustwallet.svg'
+import { WALLET_PROVIDERS, type WalletProvider } from '../../../lib/wallet'
+import metamaskIcon from '../../../assets/wallets/metamask.svg'
+import walletconnectIcon from '../../../assets/wallets/walletconnect.svg'
+import phantomIcon from '../../../assets/wallets/phantom.svg'
+import coinbaseIcon from '../../../assets/wallets/coinbase.svg'
+import trustwalletIcon from '../../../assets/wallets/trustwallet.svg'
 import './ConnectWalletModal.scss'
 
 const WALLET_ICONS: Record<string, string> = {

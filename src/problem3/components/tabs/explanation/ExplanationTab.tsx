@@ -1,4 +1,4 @@
-import { EXPLANATION_GROUPS } from '../../reviewContent'
+import { EXPLANATION_GROUPS } from '../../../reviewContent'
 import './ExplanationTab.scss'
 
 // Explanation tab: the findings grouped into prose bullet lists per concern

@@ -42,7 +42,7 @@ the saved swap history.
 - **Token selection modal** with search and token icons.
 - **Live validation** for empty amounts, insufficient balances, same-token pairs,
   and missing wallet state.
-- **Quote details panel** ([SwapDetails](./components/swap/SwapDetails.tsx))
+- **Quote details panel** ([SwapDetails](./components/swap/swap-details/SwapDetails.tsx))
   shown once an amount is entered: best route with per-chain ETA, minimum
   received after slippage, flippable rate, network fee priced in the chain's
   native token, and flat TX fee — with an expandable aggregator route comparison.
@@ -69,9 +69,19 @@ problem2/
 ├── assets/wallets/         # wallet provider logos
 ├── components/
 │   ├── layout/             # PageHeader
-│   ├── swap/               # SwapPanel, Swap99, SwapDetails, SlippageSelector, route/safety panels
+│   ├── swap/               # swap feature entrypoint
+│   │   ├── swap-shell/     # Swap99 container, style, test
+│   │   ├── swap-panel/     # From/To amount panel, style, test
+│   │   ├── swap-details/   # quote details and test
+│   │   ├── route-comparison/   # route comparison panel, style, test
+│   │   ├── safety-checks/      # safety checklist and test
+│   │   └── slippage-selector/  # slippage selector and test
 │   ├── history/            # SwapHistory
-│   ├── modals/             # wallet, token, network, disclaimer modals
+│   ├── modals/             # modal entrypoint
+│   │   ├── connect-wallet/ # wallet picker, style, test
+│   │   ├── disclaimer/     # disclaimer gate and test
+│   │   ├── switch-network/ # network confirmation, style, test
+│   │   └── token-select/   # token picker, style, test
 │   └── ui/                 # TokenIcon, WalletAvatar
 ├── hooks/                  # useTokenPrices, useSwapHistory
 └── lib/                    # tokens, wallet (incl. session persistence), networks
@@ -81,6 +91,9 @@ problem2/
 
 - Business logic is kept in `lib/` and `hooks/` so UI components stay focused on
   presentation and interaction.
+- Larger UI areas use feature folders with component, stylesheet, and test files
+  colocated together; `components/swap/index.ts` and `components/modals/index.ts`
+  provide the public import points.
 - Tokens without available pricing are filtered out before they reach the swap
   flow.
 - The disclaimer is a real conditional mount, so removing the modal from the DOM
@@ -109,8 +122,9 @@ Coverage spans:
   persistence/expiry, and address helpers.
 - **hooks/** — `useSwapHistory` (hydration, 50-record cap, corrupted storage)
   and `useTokenPrices` (mocked fetch: success, HTTP/network errors, refetch).
-- **components/** — every modal, swap panel, and history view, plus a
-  `Swap99` integration test driving the full swap lifecycle with fake timers.
+- **components/** — every modal, swap panel, and history view, with tests
+  colocated beside the feature they cover; `Swap99` also has an integration test
+  driving the full swap lifecycle with fake timers.
 - **Problem2Page** — disclaimer gating and wallet-session restore/expiry.
 
 ## Running

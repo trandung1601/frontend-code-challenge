@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { FiCopy, FiCheck } from 'react-icons/fi'
-import { highlight } from '../../highlight'
-import { ORIGINAL_CODE, REFACTORED_CODE } from '../../reviewContent'
+import { highlight } from '../../../highlight'
+import { ORIGINAL_CODE, REFACTORED_CODE } from '../../../reviewContent'
 import './RefactoredTab.scss'
 
 type Which = 'original' | 'refactored'

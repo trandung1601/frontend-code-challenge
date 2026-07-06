@@ -42,9 +42,9 @@ frontend-code-challenge/
 ├── package-lock.json
 ├── README.md
 ├── src/
-│   ├── problem1/
-│   ├── problem2/
-│   ├── problem3/
+│   ├── problem1/          # algorithm playground
+│   ├── problem2/          # swap UI, grouped by feature folders
+│   ├── problem3/          # review dashboard, grouped by tab folders
 │   ├── App.tsx
 │   ├── HomePage.tsx
 │   └── main.tsx
@@ -54,8 +54,8 @@ frontend-code-challenge/
 ## Problems
 
 - `problem1`: Three ways to sum to `n`, with a Monaco editor, test runner, and custom test cases in [src/problem1](src/problem1)
-- `problem2`: polished token swap UI demo with live prices, wallet/network session persistence, and a fully unit-tested component layer in [src/problem2](src/problem2)
-- `problem3`: code review and refactor presentation for a messy React component in [src/problem3](src/problem3)
+- `problem2`: polished token swap UI demo with live prices, wallet/network session persistence, and colocated feature folders for swap and modal components in [src/problem2](src/problem2)
+- `problem3`: code review and refactor presentation for a messy React component, with each dashboard tab isolated in its own folder in [src/problem3](src/problem3)
 
 `problem1` is the most interactive deliverable: users can edit JavaScript
 implementations directly in the browser and validate them immediately. `problem3`

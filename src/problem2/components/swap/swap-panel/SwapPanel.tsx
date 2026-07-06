@@ -1,8 +1,8 @@
 import { FiChevronDown } from 'react-icons/fi'
-import TokenIcon from '../ui/TokenIcon'
-import WalletAvatar from '../ui/WalletAvatar'
-import { chainIconSymbol, chainOf, formatAmount, formatUsd, type Token } from '../../lib/tokens'
-import { truncateAddress, type WalletProvider } from '../../lib/wallet'
+import TokenIcon from '../../ui/TokenIcon'
+import WalletAvatar from '../../ui/WalletAvatar'
+import { chainIconSymbol, chainOf, formatAmount, formatUsd, type Token } from '../../../lib/tokens'
+import { truncateAddress, type WalletProvider } from '../../../lib/wallet'
 import './SwapPanel.scss'
 
 // One "From:" / "To:" block: label sits *above* the lavender box (on the card),

@@ -3,7 +3,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { act, cleanup, fireEvent, render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom/vitest'
 import ConnectWalletModal from './ConnectWalletModal'
-import { WALLET_PROVIDERS } from '../../lib/wallet'
+import { WALLET_PROVIDERS } from '../../../lib/wallet'
 
 afterEach(cleanup)
 

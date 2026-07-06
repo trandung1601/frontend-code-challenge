@@ -1,6 +1,6 @@
 import { FiX, FiChevronDown, FiShield } from 'react-icons/fi'
-import type { Network } from '../../lib/networks'
-import TokenIcon from '../ui/TokenIcon'
+import type { Network } from '../../../lib/networks'
+import TokenIcon from '../../ui/TokenIcon'
 import './SwitchNetworkModal.scss'
 
 export default function SwitchNetworkModal({

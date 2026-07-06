@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ISSUES, CATEGORY_LABELS, type Category, type Severity } from '../../reviewContent'
+import { ISSUES, CATEGORY_LABELS, type Category, type Severity } from '../../../reviewContent'
 import './IssuesTab.scss'
 
 type Filter = 'all' | Category

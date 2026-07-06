@@ -3,9 +3,9 @@ import { afterEach, describe, expect, it, vi } from 'vitest'
 import { act, cleanup, fireEvent, render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom/vitest'
 import Swap99 from './Swap99'
-import { NETWORKS } from '../../lib/networks'
-import { WALLET_PROVIDERS, type ConnectedWallet } from '../../lib/wallet'
-import type { Token } from '../../lib/tokens'
+import { NETWORKS } from '../../../lib/networks'
+import { WALLET_PROVIDERS, type ConnectedWallet } from '../../../lib/wallet'
+import type { Token } from '../../../lib/tokens'
 
 afterEach(cleanup)
 

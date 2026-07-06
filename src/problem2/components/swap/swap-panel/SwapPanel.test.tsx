@@ -3,8 +3,8 @@ import { afterEach, describe, expect, it, vi } from 'vitest'
 import { cleanup, fireEvent, render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom/vitest'
 import SwapPanel from './SwapPanel'
-import { WALLET_PROVIDERS } from '../../lib/wallet'
-import type { Token } from '../../lib/tokens'
+import { WALLET_PROVIDERS } from '../../../lib/wallet'
+import type { Token } from '../../../lib/tokens'
 
 afterEach(cleanup)
 
