@@ -1,49 +1,76 @@
-# Problem 1 — Three Ways to Sum to N
+# Problem 1 — Three Ways to Sum to N  <!-- omit in toc -->
 
-Implement three unique functions that compute the summation from `1` to `n`:
+An interactive algorithm challenge for implementing three unique JavaScript
+functions that compute the summation to `n`.
 
-```
+-   Includes a Monaco editor preloaded with the solution
+-   Runs all three implementations against built-in and custom test cases
+-   Supports positive, zero, and negative integer inputs
+-   Keeps execution logic isolated from React for straightforward unit testing
+
+## Table of Contents  <!-- omit in toc -->
+
+- [Challenge](#challenge)
+- [Implementations](#implementations)
+- [Interactive Page](#interactive-page)
+- [Files](#files)
+- [Testing](#testing)
+
+## Challenge
+
+Implement three unique functions that compute the summation to `n`:
+
+```js
 sum_to_n(5) // 1 + 2 + 3 + 4 + 5 = 15
+sum_to_n(-5) // -1 + -2 + -3 + -4 + -5 = -15
 ```
 
-**Assumption:** `n` is a non-negative integer and the result stays below
+**Assumption:** `n` is an integer and the result stays below
 `Number.MAX_SAFE_INTEGER`.
 
-## The three implementations
+## Implementations
 
 See [solution.js](./solution.js).
 
 | Function | Approach | Time | Space |
-|---|---|---|---|
+| -------- | -------- | ---- | ----- |
 | `sum_to_n_a` | Iterative loop | O(n) | O(1) |
-| `sum_to_n_b` | Recursion | O(n) | O(n) — call stack |
-| `sum_to_n_c` | Gauss formula `n(n+1)/2` | O(1) | O(1) |
+| `sum_to_n_b` | Recursion | O(n) | O(n) call stack |
+| `sum_to_n_c` | Gauss formula | O(1) | O(1) |
 
-- **`sum_to_n_a`** — the straightforward, readable baseline.
-- **`sum_to_n_b`** — recursive; note that for large `n` it overflows the call
-  stack (O(n) depth). That is the expected trade-off of the recursive approach,
-  not a bug — the UI surfaces it as a clear "stack overflow" message.
-- **`sum_to_n_c`** — the closed-form solution; constant time and the one you'd
-  ship in practice.
+- **`sum_to_n_a`** is the straightforward readable baseline.
+- **`sum_to_n_b`** is recursive; for large absolute values of `n`, it can overflow
+  the call stack. The UI surfaces that trade-off as a clear stack overflow error.
+- **`sum_to_n_c`** is the closed-form solution and the best practical choice for
+  large inputs.
 
-## Interactive page
+## Interactive Page
 
-[Problem1Page.tsx](./Problem1Page.tsx) renders a live playground:
+[Problem1Page.tsx](./Problem1Page.tsx) renders the live playground.
 
-- A Monaco code editor pre-loaded with the solution.
-- A **test runner** that compiles the code and runs all three functions against
-  a set of built-in cases (`0, 1, 5, 10, 100`), showing pass/fail per function.
-- **Custom test inputs** with validation (integer, non-negative, unique, within
-  the safe-integer range) — see `validateCustomInput` in [runner.ts](./runner.ts).
+The page includes:
+
+- A Monaco code editor preloaded with the solution.
+- A test runner that compiles the editor content and runs `sum_to_n_a`,
+  `sum_to_n_b`, and `sum_to_n_c`.
+- Built-in test cases for common positive and zero inputs.
+- Custom test input validation for integer, unique, and safe-result values.
 
 ## Files
 
-```
+```text
 problem1/
-├── solution.js        # the three implementations
-├── runner.ts          # pure test/exec logic (no React) — easy to unit-test
+├── solution.js        # three implementations
+├── runner.ts          # pure test/exec logic with no React dependency
 ├── runner.test.ts     # Vitest unit tests
-└── Problem1Page.tsx   # interactive editor + test runner UI
+├── Problem1Page.tsx   # interactive editor and test runner UI
+└── Problem1Page.scss  # page styles
 ```
 
-Run the unit tests with `npm run test`.
+## Testing
+
+Run the unit tests from the repository root:
+
+```bash
+npm test
+```

@@ -1,99 +1,105 @@
-# Problem 3 — Messy React (Code Review)
+# Problem 3 — Messy React  <!-- omit in toc -->
+
+A code review deliverable for a flawed `WalletPage` component. The review lists
+the computational inefficiencies, correctness bugs, React anti-patterns, and a
+refactored implementation.
+
+-   Captures 15 findings across correctness, warnings, and improvements
+-   Presents the same content in an interactive `/problem3` dashboard
+-   Includes original and refactored TypeScript/React snippets
+-   Keeps review content centralized in [reviewContent.ts](./reviewContent.ts)
+
+## Table of Contents  <!-- omit in toc -->
+
+- [Challenge](#challenge)
+- [Summary](#summary)
+- [Critical Findings](#critical-findings)
+- [Warnings](#warnings)
+- [Improvements](#improvements)
+- [Original Code](#original-code)
+- [Refactored Code](#refactored-code)
+- [Structure](#structure)
+
+## Challenge
 
 List the computational inefficiencies and anti-patterns in the `WalletPage`
-component below, explain how to fix them, and provide a refactored version.
+component, explain how to fix them, and provide a refactored version.
 
-> The same content is presented as an interactive dashboard at **`/problem3`**
-> (Overview / Issues / Refactored Code / Explanation tabs). All the review
-> content lives in [reviewContent.ts](./reviewContent.ts) — this README is
-> generated from the same source so it can be read without running the app.
+The same content is presented as an interactive dashboard at `/problem3` with
+Overview, Issues, Refactored Code, and Explanation tabs.
 
-**15 issues found — 5 critical, 6 warnings, 4 improvements.**
+## Summary
 
----
+**15 issues found: 5 critical, 6 warnings, and 4 improvements.**
 
-## Critical — correctness bugs
+| Category | Count | Focus |
+| -------- | ----- | ----- |
+| Critical | 5 | Runtime errors, incorrect filtering, missing data, unused computed output |
+| Warning | 6 | Type safety, unstable sorting, unstable keys, unnecessary recomputation |
+| Improvement | 4 | Cleaner props typing, hoisted helpers, memoized formatting pipeline |
+
+## Critical Findings
 
 **1. Undefined variable: `lhsPriority`**
-The filter declares `balancePriority` but then checks `lhsPriority`, which does
-not exist in scope. This is a `ReferenceError` at runtime.
-→ Reference the variable you actually declared: `if (balancePriority > -99)`.
 
-**2. Inverted filter: keeps empty balances**
-The filter returns `true` when `amount <= 0`, so it keeps only zero/negative
-balances and discards every real one — the opposite of the intent.
-→ `return getPriority(balance.blockchain) > -99 && balance.amount > 0;`
+The filter declares `balancePriority` but checks `lhsPriority`, which does not
+exist in scope. This throws a `ReferenceError` at runtime.
+
+Fix: reference the declared variable with `if (balancePriority > -99)`.
+
+**2. Inverted filter keeps empty balances**
+
+The filter returns `true` when `amount <= 0`, so it keeps only zero or negative
+balances and discards real balances.
+
+Fix: `return getPriority(balance.blockchain) > -99 && balance.amount > 0`.
 
 **3. Missing `blockchain` property on `WalletBalance`**
-`getPriority(balance.blockchain)` is called everywhere, but the interface only
-declares `currency` and `amount`. This is a compile error under strict TS.
-→ Add `blockchain: Blockchain` to the interface.
+
+`getPriority(balance.blockchain)` is called repeatedly, but the interface only
+declares `currency` and `amount`.
+
+Fix: add `blockchain: Blockchain` to the interface.
 
 **4. Unsafe cast in the `rows` mapping**
-`rows` maps over `sortedBalances` (`WalletBalance[]`) but types each item as
-`FormattedWalletBalance` and reads `balance.formatted` — a field that was never
-added, so it renders `undefined`.
-→ Map over the actually-formatted list.
+
+`rows` maps over `sortedBalances` but types each item as
+`FormattedWalletBalance`, then reads `balance.formatted`, which was never added.
+
+Fix: render from the formatted list.
 
 **5. `formattedBalances` computed but never used**
-A full mapping pass builds `formattedBalances`, then `rows` iterates the
-unformatted `sortedBalances` instead. The work is wasted and the formatted
-amounts never reach the UI.
-→ Render from `formattedBalances`, or fold formatting into one memoized pipeline.
 
-## Warning
+A full mapping pass builds `formattedBalances`, but the UI maps over
+`sortedBalances`, wasting work and losing formatted values.
 
-**6. Sort comparator missing the equality case**
-The comparator only returns `-1` or `1`; when priorities are equal (e.g. Zilliqa
-vs Neo, both 20) it returns `undefined` — unspecified behavior, unstable order.
-→ `return getPriority(rhs.blockchain) - getPriority(lhs.blockchain);`
+Fix: render from `formattedBalances`, or fold formatting into one memoized
+pipeline.
 
-**7. `blockchain` parameter typed as `any`**
-`getPriority(blockchain: any)` throws away type safety.
-→ Use a string-literal union `Blockchain` and a `Record` lookup instead of the switch.
+## Warnings
 
-**8. Array `index` used as React `key`**
-The list is filtered and sorted, so indexes shift as data changes. Index keys
-cause React to mis-reconcile rows (wrong state reuse, extra re-renders).
-→ ``key={`${balance.blockchain}-${balance.currency}`}``
+- **Sort comparator missing equality:** return a numeric equality case with
+  `getPriority(rhs.blockchain) - getPriority(lhs.blockchain)`.
+- **`blockchain` typed as `any`:** use a string-literal union and a priority
+  lookup table.
+- **Array index used as React key:** use a stable key such as
+  ``${balance.blockchain}-${balance.currency}``.
+- **`children` destructured but never rendered:** render `{children}` or remove
+  it from the props contract.
+- **Unnecessary `prices` dependency:** avoid re-running sort logic on price-only
+  changes when prices are not read by that memo.
+- **Repeated priority calls during sort:** precompute priority or use an O(1)
+  lookup table.
 
-**9. `children` destructured but never rendered**
-`children` is pulled out of props but the JSX only renders `rows`.
-→ Render `{children}` (or stop accepting it).
+## Improvements
 
-**10. `prices` is an unnecessary `useMemo` dependency**
-The `sortedBalances` memo never reads `prices`, yet lists it as a dependency —
-every price tick re-runs the filter and sort for nothing.
-→ Depend on `[balances]`; use `prices` only where it's actually read.
+- Type component props once instead of combining `React.FC<Props>` with
+  `(props: Props)`.
+- Hoist `getPriority` and the priority table to module scope.
+- Memoize formatting and USD value calculation with the sorted balance pipeline.
+- Replace separate filter, sort, and mapping work with one clear memoized flow.
 
-**11. `getPriority` called repeatedly during sort**
-The comparator calls `getPriority` twice per comparison — O(n log n) redundant
-calls, plus one per item in the filter.
-→ Use an O(1) lookup table, or precompute priority per item before sorting.
-
-## Improvement
-
-**12. `React.FC<Props>` with duplicated props typing**
-The component is typed twice (`React.FC<Props>` and `(props: Props)`), and
-`React.FC` adds an unwanted implicit `children`.
-→ Type the destructured parameter once: `({ children, ...rest }: Props)`.
-
-**13. `getPriority` defined inside the component**
-It depends on nothing yet is recreated every render.
-→ Hoist it (and the priority table) to module scope.
-
-**14. `rows` and USD values recomputed every render**
-`formattedBalances` and `rows` run on every render even when inputs are unchanged.
-→ Fold format + USD into the memoized pipeline so they compute only when
-`balances`/`prices` change.
-
-**15. Three separate passes over the same data**
-`filter`, `sort`, and two `map` passes each walk the list.
-→ One chained, memoized pipeline — filter → sort → map — done once.
-
----
-
-## Original code
+## Original Code
 
 ```tsx
 interface WalletBalance {
@@ -174,7 +180,7 @@ const WalletPage: React.FC<Props> = (props: Props) => {
 }
 ```
 
-## Refactored code
+## Refactored Code
 
 ```tsx
 type Blockchain =
@@ -252,12 +258,13 @@ const WalletPage = ({ children, ...rest }: Props) => {
 
 ## Structure
 
-```
+```text
 problem3/
-├── Problem3Page.tsx      # shell: theme, top bar, hero, tab nav
-├── reviewContent.ts      # findings, code snippets, flow & explanation content
-├── highlight.tsx         # tiny TS syntax highlighter for the code panels
+├── Problem3Page.tsx      # page shell, theme, hero, and tab navigation
+├── Problem3Page.scss     # page-level styles
+├── reviewContent.ts      # findings, snippets, flow, and explanation content
+├── highlight.tsx         # lightweight TS syntax highlighter
 └── components/
-    ├── layout/           # TopBar, Hero (page chrome)
-    └── tabs/             # Overview / Issues / Refactored / Explanation
+    ├── layout/           # TopBar, Hero
+    └── tabs/             # Overview, Issues, Refactored, Explanation
 ```
