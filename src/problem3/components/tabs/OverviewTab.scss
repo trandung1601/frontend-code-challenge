@@ -1,0 +1,43 @@
+@use '../../../styles/base' as *;
+
+.p3-overview { display: grid; grid-template-columns: minmax(280px, 1fr) minmax(280px, 1fr); gap: 20px; align-items: start; }
+.p3-overview-right { display: flex; flex-direction: column; gap: 20px; }
+
+.p3-flow { display: flex; flex-direction: column; margin-top: 18px; }
+.p3-flow-item { display: flex; flex-direction: column; }
+.p3-flow-row {
+  display: flex; align-items: center; gap: 12px; padding: 11px 14px;
+  border: 1px solid var(--border); border-radius: 9px; background: var(--bg);
+}
+.p3-flow-num { font-family: $f-mono; font-size: 12px; color: var(--muted); min-width: 18px; }
+.p3-flow-label { font-size: 14px; font-weight: 500; }
+.p3-flow-flag {
+  margin-left: auto; font-family: $f-mono; font-size: 11px; font-weight: 600; white-space: nowrap;
+  color: var(--sev-critical); background: var(--sev-critical-soft); padding: 3px 9px; border-radius: 999px;
+}
+.p3-flow-arrow { color: var(--muted); opacity: 0.55; font-size: 14px; text-align: center; padding: 5px 0; line-height: 1; }
+
+.p3-cats { display: flex; flex-direction: column; margin-top: 12px; }
+.p3-cat-row { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border); &:last-child { border-bottom: 0; } }
+.p3-cat-name { font-size: 14px; font-weight: 500; min-width: 150px; }
+.p3-cat-track { flex: 1; height: 8px; background: var(--bg); border-radius: 4px; overflow: hidden; }
+.p3-cat-bar {
+  height: 100%; border-radius: 4px; transition: width 0.5s $ease-spring;
+  &.cat-logic { background: var(--cat-logic); }
+  &.cat-typescript { background: var(--cat-typescript); }
+  &.cat-react { background: var(--cat-react); }
+  &.cat-performance { background: var(--cat-performance); }
+}
+.p3-cat-count { font-family: $f-mono; font-size: 14px; font-weight: 600; min-width: 20px; text-align: right; }
+
+// Double-class selector so the accent background wins over the shared .p3-card
+// rule regardless of stylesheet import order (both are otherwise equal weight).
+.p3-card.p3-verdict {
+  background: var(--accent); color: var(--accent-ink);
+  .p3-card-label { color: rgba(10, 11, 13, 0.55); }
+  p { margin: 12px 0 0; font-size: 14px; line-height: 1.65; }
+}
+
+@media (max-width: 780px) {
+  .p3-overview { grid-template-columns: 1fr; }
+}

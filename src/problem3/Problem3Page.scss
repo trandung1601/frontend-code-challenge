@@ -1,0 +1,85 @@
+@use '../styles/base' as *;
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Problem 3 — shell styles only: theme tokens, page layout, tab nav, footer and
+// the primitives shared across tabs (.p3-card, .p3-dot). Each tab's own styles
+// live beside its component in ./components/*.scss.
+//
+// Layout/structure ported from the supplied design; colours re-skinned onto the
+// app's theme tokens (--bg/--surface/--fg/--accent …) so it matches Home +
+// Problem 1/2 in both dark and light modes. Severity/category hues are the one
+// exception: they stay semantic (red/amber/green, blue/violet) across themes.
+// ═══════════════════════════════════════════════════════════════════════════
+
+.p3 {
+  // Severity + category hues, tuned per theme so soft backgrounds stay legible.
+  --sev-critical: #ff6a5e;
+  --sev-warning: #f5a524;
+  --sev-improvement: #4ade80;
+  --sev-critical-soft: rgba(255, 106, 94, 0.15);
+  --sev-warning-soft: rgba(245, 165, 36, 0.15);
+  --sev-improvement-soft: rgba(74, 222, 128, 0.15);
+  --cat-logic: #ff6a5e;
+  --cat-typescript: #4aa3ff;
+  --cat-react: #a78bfa;
+  --cat-performance: #f5a524;
+
+  --code-bg: #101216;
+  --code-fg: #d7dbe0;
+
+  &[data-theme='light'] {
+    --sev-critical: #d92d20;
+    --sev-warning: #b54708;
+    --sev-improvement: #067647;
+    --sev-critical-soft: #fee4e2;
+    --sev-warning-soft: #fef0c7;
+    --sev-improvement-soft: #dcf5e7;
+    --cat-logic: #d92d20;
+    --cat-typescript: #175cd3;
+    --cat-react: #5925dc;
+    --cat-performance: #dc6803;
+    --code-bg: #0f1115;
+    --code-fg: #d7dbe0;
+  }
+
+  animation: fadeIn 0.4s ease both;
+}
+
+// ── Layout ──
+.p3-wrap { max-width: 1040px; margin: 0 auto; padding: 0 24px 80px; }
+
+// ── Shared dots (severity + category) ──
+.p3-dot {
+  width: 9px; height: 9px; border-radius: 50%; display: inline-block; flex-shrink: 0;
+  &.sev-critical { background: var(--sev-critical); }
+  &.sev-warning { background: var(--sev-warning); }
+  &.sev-improvement { background: var(--sev-improvement); }
+  &.cat-logic { background: var(--cat-logic); }
+  &.cat-typescript { background: var(--cat-typescript); }
+  &.cat-react { background: var(--cat-react); }
+  &.cat-performance { background: var(--cat-performance); }
+}
+
+// ── Tabs ──
+.p3-tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--border); margin-bottom: 28px; }
+.p3-tab {
+  appearance: none; background: none; cursor: pointer; font-family: inherit; font-size: 14px;
+  font-weight: 500; color: var(--muted); padding: 11px 16px 13px; border: 0;
+  border-bottom: 2px solid transparent; margin-bottom: -1px; transition: color 0.15s;
+  &:hover { color: var(--fg); }
+}
+.p3-tab-on { color: var(--accent); font-weight: 700; border-bottom-color: var(--accent); }
+
+// ── Shared card primitive (used by Overview, Issues, Explanation tabs) ──
+.p3-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 24px; }
+.p3-card-label {
+  font-family: $f-mono; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; color: var(--muted);
+}
+
+// ── Footer ──
+.p3-footer {
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-top: 44px;
+  padding-top: 28px; border-top: 1px solid var(--border); font-family: $f-mono; font-size: 13px;
+  color: var(--muted);
+  b { color: var(--fg); }
+}

@@ -1,0 +1,49 @@
+{
+  "wallets": [
+    {
+      "id": "metamask",
+      "name": "MetaMask",
+      "description": "Popular browser wallet (EVM)",
+      "letter": "M",
+      "color": "#f6851b",
+      "chain": "evm",
+      "icon": "/src/problem2/assets/wallets/metamask.svg"
+    },
+    {
+      "id": "walletconnect",
+      "name": "WalletConnect",
+      "description": "Scan QR from a mobile wallet",
+      "letter": "W",
+      "color": "#3b99fc",
+      "chain": "evm",
+      "icon": "/src/problem2/assets/wallets/walletconnect.svg"
+    },
+    {
+      "id": "phantom",
+      "name": "Phantom",
+      "description": "Solana & multi-chain",
+      "letter": "P",
+      "color": "#ab9ff2",
+      "chain": "solana",
+      "icon": "/src/problem2/assets/wallets/phantom.svg"
+    },
+    {
+      "id": "coinbase",
+      "name": "Coinbase Wallet",
+      "description": "Self-custody wallet",
+      "letter": "C",
+      "color": "#1652f0",
+      "chain": "evm",
+      "icon": "/src/problem2/assets/wallets/coinbase.svg"
+    },
+    {
+      "id": "trust",
+      "name": "Trust Wallet",
+      "description": "Multi-chain mobile wallet",
+      "letter": "T",
+      "color": "#3375bb",
+      "chain": "evm",
+      "icon": "/src/problem2/assets/wallets/trustwallet.svg"
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+@use '../../../styles/base' as *;
+
+.p3-topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  height: 56px; padding: 0 24px; border-bottom: 1px solid var(--border);
+  background: var(--surface); position: sticky; top: 0; z-index: 10;
+}
+.p3-brand {
+  display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px;
+  letter-spacing: -0.01em; color: var(--fg); background: none; border: 0; cursor: pointer;
+}
+.p3-brand-mark {
+  display: flex; align-items: center; justify-content: center; width: 32px; height: 32px;
+  border-radius: 9px; background: var(--accent); color: var(--accent-ink); font-size: 15px;
+}
+.p3-topbar-right { display: flex; align-items: center; gap: 10px; }
+.p3-back {
+  display: flex; align-items: center; gap: 7px; font-family: $f-mono; font-size: 13px;
+  padding: 7px 14px; border-radius: 999px; border: 1px solid var(--border);
+  background: transparent; color: var(--fg); cursor: pointer; transition: border-color 0.2s;
+  &:hover { border-color: var(--muted); }
+}
+.p3-icon-btn {
+  width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
+  border-radius: 9px; border: 1px solid var(--border); background: transparent;
+  color: var(--muted); font-size: 17px; cursor: pointer; transition: color 0.15s, border-color 0.2s;
+  &:hover { color: var(--accent); border-color: var(--muted); }
+}
+
+@media (max-width: 780px) {
+  .p3-back { font-size: 12px; }
+}

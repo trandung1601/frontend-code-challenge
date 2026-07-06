@@ -1,0 +1,41 @@
+@use '../../../styles/base' as *;
+
+.p3-issues { display: flex; flex-direction: column; gap: 16px; }
+.p3-filters { display: flex; gap: 8px; flex-wrap: wrap; }
+.p3-filter {
+  appearance: none; cursor: pointer; font-family: $f-mono; font-size: 13px; font-weight: 600;
+  padding: 7px 14px; border-radius: 999px; white-space: nowrap;
+  border: 1px solid var(--border); background: var(--surface); color: var(--muted);
+  transition: border-color 0.15s, color 0.15s;
+  &:hover { border-color: var(--muted); color: var(--fg); }
+}
+.p3-filter-on { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+
+.p3-issue { transition: border-color 0.2s, transform 0.2s; &:hover { border-color: var(--muted); transform: translateY(-2px); } }
+.p3-issue-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.p3-badge {
+  font-family: $f-mono; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 999px;
+  &.sev-critical { color: var(--sev-critical); background: var(--sev-critical-soft); }
+  &.sev-warning { color: var(--sev-warning); background: var(--sev-warning-soft); }
+  &.sev-improvement { color: var(--sev-improvement); background: var(--sev-improvement-soft); }
+}
+.p3-issue-cat {
+  font-family: $f-mono; font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 999px;
+  background: var(--bg); color: var(--muted); border: 1px solid var(--border);
+}
+.p3-issue-id { margin-left: auto; font-family: $f-mono; font-size: 12px; color: var(--muted); }
+.p3-issue-title { margin: 12px 0 0; font-size: 17px; font-weight: 700; letter-spacing: -0.01em; }
+.p3-issue-desc { margin: 8px 0 0; font-size: 14px; line-height: 1.6; color: var(--muted); }
+.p3-issue-code { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin-top: 16px; }
+.p3-codeblock { display: flex; flex-direction: column; gap: 6px; }
+.p3-codeblock-label {
+  font-family: $f-mono; font-size: 11px; font-weight: 700; letter-spacing: 0.06em;
+  &.bad { color: var(--sev-critical); }
+  &.good { color: var(--sev-improvement); }
+}
+.p3-pre {
+  margin: 0; padding: 12px 14px; border-radius: 9px; font-family: $f-mono; font-size: 12.5px;
+  line-height: 1.6; overflow-x: auto; white-space: pre;
+  &.bad { background: var(--sev-critical-soft); border: 1px solid var(--sev-critical); color: var(--fg); }
+  &.good { background: var(--sev-improvement-soft); border: 1px solid var(--sev-improvement); color: var(--fg); }
+}

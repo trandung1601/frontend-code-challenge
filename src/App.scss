@@ -1,0 +1,65 @@
+// ═══════════════════════════════════════════════════════════════════════════
+// Global stylesheet — theme tokens, keyframes and app-wide resets only.
+// Feature/component styles live in co-located .scss files imported by their
+// own component (HomePage.scss, problem1/Problem1Page.scss, problem2/*.scss …).
+// ═══════════════════════════════════════════════════════════════════════════
+
+// ── Theme tokens (Home + Problem 1) ──
+[data-theme="dark"] {
+  --bg: #0b0c0f;
+  --surface: #16181d;
+  --fg: #f4f6f7;
+  --muted: #9aa1a9;
+  --border: rgba(255, 255, 255, 0.1);
+  --accent: #b6f24a;
+  --accent-ink: #0a0b0d;
+  --accent-soft: rgba(182, 242, 74, 0.16);
+}
+
+[data-theme="light"] {
+  --bg: #f6f7f9;
+  --surface: #ffffff;
+  --fg: #0d0f12;
+  --muted: #5c626a;
+  --border: rgba(0, 0, 0, 0.12);
+  --accent: #7fd320;
+  --accent-ink: #0a0b0d;
+  --accent-soft: rgba(127, 211, 32, 0.18);
+}
+
+// ── Keyframes (global; referenced by name across component stylesheets) ──
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(32px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+// ── Shared button hovers (HomePage) ──
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(182, 242, 74, 0.35);
+}
+
+.btn-theme:hover     { border-color: var(--muted) !important; }
+.btn-secondary:hover { background: var(--surface) !important; }
+
+// ── Hide native number-input spinners (used by the Problem 1 stepper) ──
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] { -moz-appearance: textfield; appearance: textfield; }

@@ -1,0 +1,10 @@
+// ── Number stepper ──
+.stepper-btn:hover {
+  filter: brightness(0.92);
+  border-color: var(--muted);
+}
+[data-theme="dark"] .stepper-btn:hover { filter: brightness(1.4); }
+
+// ── Test-case rows ──
+.test-row:hover { background: var(--surface) !important; }
+.remove-btn:hover { color: #f87171 !important; background: rgba(248, 113, 113, 0.12); }

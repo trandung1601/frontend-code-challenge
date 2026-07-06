@@ -1,0 +1,75 @@
+@use 'styles/base' as *;
+
+// ── Nav ──
+.nav-animate { animation: fadeDown 0.6s $ease-spring both; }
+
+// ── User info card ──
+.user-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #b6f24a;
+  color: #0a0b0d;
+  font-family: $f-mono;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .04em;
+  flex-shrink: 0;
+}
+
+.user-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 7px;
+  font-size: 16px;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.15s, background 0.15s;
+  &:hover {
+    color: #b6f24a;
+    background: var(--surface);
+  }
+}
+
+.divider {
+  width: 1px;
+  height: 24px;
+  background: var(--border);
+}
+
+// ── Hero ──
+.hero-label { @include fade-up(0.6s, 0.10s); }
+.hero-h1    { @include fade-up(0.7s, 0.22s); }
+.hero-p     { @include fade-up(0.7s, 0.36s); }
+.hero-ctas  { @include fade-up(0.7s, 0.48s); }
+
+// ── Footer ──
+.footer-animate { animation: fadeIn 0.8s ease 0.6s both; }
+
+// ── Problem rows ──
+.problem-row {
+  opacity: 0;
+  transition: background 0.2s, padding 0.2s;
+
+  &.visible {
+    animation: fadeUp 0.65s $ease-spring both;
+  }
+
+  &:hover {
+    background: var(--surface);
+
+    .problem-num {
+      transform: scale(1.08);
+    }
+  }
+}
+
+.problem-num {
+  transition: transform 0.3s $ease-spring;
+}

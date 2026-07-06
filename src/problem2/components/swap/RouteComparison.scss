@@ -1,0 +1,28 @@
+.flux {
+  .flux-route {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 16px;
+    border-radius: 14px;
+    background: var(--f-inner);
+    border: 0.8px solid var(--f-inner-brd);
+    transition: border-color 0.15s;
+
+    &.flux-route-best {
+      border-color: color-mix(in srgb, var(--f-mint) 45%, transparent);
+      background: color-mix(in srgb, var(--f-mint) 4%, var(--f-inner));
+    }
+  }
+
+  .flux-badge-delta {
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: var(--f-hover);
+    color: var(--f-muted2);
+    font-family: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
+    font-size: 10.5px;
+    font-weight: 600;
+  }
+}

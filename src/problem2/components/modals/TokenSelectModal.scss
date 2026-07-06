@@ -1,0 +1,81 @@
+.flux {
+  .flux-search {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    height: 44px;
+    padding: 0 13px;
+    border-radius: 12px;
+    background: var(--f-inner);
+    border: 0.8px solid var(--f-inner-brd);
+    &:focus-within { border-color: var(--f-mint); }
+  }
+
+  .flux-token-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 10px 20px;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    transition: background 0.12s;
+    &:hover:not(:disabled) { background: var(--f-hover); }
+  }
+
+  // ── Network filter (below the search input) ──
+  .flux-net-label {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--f-muted2);
+    margin-bottom: 8px;
+  }
+
+  .flux-net-icons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .flux-net-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border-radius: 50%;
+    border: 1px solid var(--f-inner-brd);
+    background: var(--f-inner);
+    cursor: pointer;
+    transition: transform 0.12s, border-color 0.15s, box-shadow 0.15s;
+    &:hover { transform: translateY(-1px); border-color: var(--f-muted); }
+
+    &.flux-net-btn-on {
+      border-color: var(--f-mint);
+      background: var(--f-mint-bg);
+      box-shadow: 0 0 0 2px var(--f-mint-bg), 0 0 16px -4px var(--f-glow);
+    }
+  }
+
+  .flux-net-more {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    height: 40px;
+    padding: 0 13px;
+    border-radius: 999px;
+    border: 1px solid var(--f-inner-brd);
+    background: var(--f-inner);
+    color: var(--f-muted2);
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: color 0.15s, border-color 0.15s;
+    &:hover { color: var(--f-fg); border-color: var(--f-muted); }
+
+    svg { font-size: 13px; transition: transform 0.2s; }
+  }
+}

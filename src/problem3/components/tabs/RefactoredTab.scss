@@ -1,0 +1,26 @@
+@use '../../../styles/base' as *;
+
+.p3-refactored { display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap: 20px; align-items: start; }
+.p3-window { background: var(--code-bg); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
+.p3-window-bar { display: flex; align-items: center; gap: 10px; padding: 14px 18px; border-bottom: 1px solid var(--border); background: rgba(255, 255, 255, 0.03); }
+.p3-window-name { font-size: 14px; font-weight: 600; color: var(--code-fg); }
+.p3-copy {
+  margin-left: auto; display: inline-flex; align-items: center; gap: 6px; font-family: $f-mono;
+  font-size: 12px; font-weight: 500; padding: 5px 12px; border-radius: 7px; cursor: pointer;
+  border: 1px solid var(--border); background: transparent; color: var(--muted); white-space: nowrap;
+  transition: color 0.15s, border-color 0.15s;
+  &:hover { color: var(--accent); border-color: var(--muted); }
+}
+.p3-code {
+  margin: 0; padding: 18px 20px; font-family: $f-mono; font-size: 12.5px; line-height: 1.65;
+  overflow-x: auto; white-space: pre; color: var(--code-fg);
+  .tok-comment { color: #6b7280; font-style: italic; }
+  .tok-string { color: #b6f24a; }
+  .tok-keyword { color: #ff9edb; }
+  .tok-type { color: #82d4ff; }
+  .tok-number { color: #ffca80; }
+}
+
+@media (max-width: 780px) {
+  .p3-refactored { grid-template-columns: 1fr; }
+}

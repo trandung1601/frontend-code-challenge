@@ -1,0 +1,44 @@
+@use '../../../styles/base' as *;
+
+.p3-hero { padding: 44px 0 26px; }
+.p3-eyebrow {
+  display: flex; align-items: center; gap: 10px; font-family: $f-mono; font-size: 13px;
+  letter-spacing: 0.04em; color: var(--muted);
+  .p3-slash { color: var(--border); }
+}
+.p3-title {
+  margin: 12px 0 0; font-size: 44px; font-weight: 900; letter-spacing: -0.03em; text-transform: uppercase;
+  @include fade-up(0.6s, 0.05s);
+}
+.p3-tags { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+.p3-tag {
+  display: inline-flex; align-items: center; gap: 6px; font-family: $f-mono; font-size: 12px;
+  font-weight: 500; padding: 5px 12px; border-radius: 999px; border: 1px solid var(--border);
+  color: var(--fg);
+  svg { font-size: 14px; }
+}
+.p3-lede {
+  margin: 18px 0 0; font-size: 16px; line-height: 1.6; color: var(--muted); max-width: 60ch;
+  code {
+    font-family: $f-mono; font-size: 13px; background: var(--surface); color: var(--fg);
+    padding: 1px 6px; border-radius: 5px; border: 1px solid var(--border);
+  }
+}
+
+// ── Summary bar ──
+.p3-summary {
+  display: flex; align-items: center; gap: 24px; margin-top: 26px; padding: 16px 22px;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 14px; flex-wrap: wrap;
+}
+.p3-summary-total { display: flex; align-items: baseline; gap: 8px; }
+.p3-summary-num { font-family: $f-mono; font-size: 28px; font-weight: 600; letter-spacing: -0.02em; }
+.p3-summary-lbl { font-size: 13px; color: var(--muted); font-weight: 500; }
+.p3-summary-div { width: 1px; height: 28px; background: var(--border); }
+.p3-summary-stat {
+  display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--muted);
+  strong { color: var(--fg); font-weight: 700; }
+}
+
+@media (max-width: 780px) {
+  .p3-title { font-size: 34px; }
+}

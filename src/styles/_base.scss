@@ -1,0 +1,10 @@
+// Shared SCSS tokens + mixins. Emits no CSS on its own, so it can be safely
+// `@use`d from any number of component stylesheets without duplication.
+
+$accent: #b6f24a;
+$ease-spring: cubic-bezier(0.22, 1, 0.36, 1);
+$f-mono: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
+
+@mixin fade-up($duration: 0.7s, $delay: 0s) {
+  animation: fadeUp $duration $ease-spring $delay both;
+}
