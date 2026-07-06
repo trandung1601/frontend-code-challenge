@@ -20,9 +20,12 @@ export const TEST_CASES: TestCase[] = [
   { input: 100, expected: 5050 },
 ]
 
-/** Ground-truth sum 1..n via Gauss formula. Non-positive n yields 0. */
+/** Ground-truth summation to n. Negative n sums -1 + -2 + ... + n. */
 export function expectedSum(n: number): number {
-  return n <= 0 ? 0 : (n * (n + 1)) / 2
+  if (n === 0) return 0
+  if (n > 0) return (n * (n + 1)) / 2
+  const abs = Math.abs(n)
+  return -((abs * (abs + 1)) / 2)
 }
 
 /** Compile the user's code and run all three implementations against n. */
@@ -62,7 +65,7 @@ export type ValidationResult =
 
 /**
  * Validate a custom test input against the problem constraints:
- * integer, non-negative (assumption), unique, result < MAX_SAFE_INTEGER.
+ * integer, unique, result < MAX_SAFE_INTEGER.
  */
 export function validateCustomInput(raw: string, existing: number[]): ValidationResult {
   const trimmed = raw.trim()
@@ -70,10 +73,6 @@ export function validateCustomInput(raw: string, existing: number[]): Validation
     return { ok: false, error: 'Please enter a valid integer' }
   }
   const value = Number.parseInt(trimmed, 10)
-  // Assumption: n is a non-negative integer (n >= 0)
-  if (value < 0) {
-    return { ok: false, error: 'n must be >= 0 (see assumption)' }
-  }
   const builtIn = TEST_CASES.some((tc) => tc.input === value)
   if (builtIn || existing.includes(value)) {
     return { ok: false, error: `n = ${value} is already in the list` }

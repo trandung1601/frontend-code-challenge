@@ -232,7 +232,7 @@ export default function Problem1Page({
               <FiInfo className="text-[15px]" /> Assumption
             </div>
             <p className="text-[13px] m-0 font-mono" style={{ color: 'var(--muted)' }}>
-              n is a non-negative integer (n &gt;= 0).
+              n is an integer. Negative n sums -1 + -2 + ... + n.
             </p>
           </section>
         </aside>
@@ -361,19 +361,17 @@ export default function Problem1Page({
                 >
                   <button
                     type="button"
-                    onClick={() => setN((v) => Math.max(0, v - 1))}
-                    disabled={n <= 0}
+                    onClick={() => setN((v) => v - 1)}
                     aria-label="Decrease"
-                    className="stepper-btn flex items-center justify-center w-9 h-9 rounded-lg text-[16px] font-medium cursor-pointer border-0 shrink-0 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                    className="stepper-btn flex items-center justify-center w-9 h-9 rounded-lg text-[16px] font-medium cursor-pointer border-0 shrink-0 transition-colors"
                     style={{ background: 'var(--bg)', color: 'var(--fg)' }}
                   >
                     <FiMinus />
                   </button>
                   <input
                     type="number"
-                    min={0}
                     value={n}
-                    onChange={(e) => setN(Math.max(0, Number(e.target.value)))}
+                    onChange={(e) => setN(Number(e.target.value))}
                     className="min-w-0 flex-1 text-center bg-transparent text-[15px] font-mono outline-none"
                     style={{ color: 'var(--fg)' }}
                   />

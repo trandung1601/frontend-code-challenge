@@ -8,9 +8,13 @@ describe('expectedSum', () => {
     expect(expectedSum(100)).toBe(5050)
   })
 
-  it('returns 0 for zero and negative n', () => {
+  it('returns 0 for zero', () => {
     expect(expectedSum(0)).toBe(0)
-    expect(expectedSum(-5)).toBe(0)
+  })
+
+  it('computes the descending negative sum for negative n', () => {
+    expect(expectedSum(-1)).toBe(-1)
+    expect(expectedSum(-5)).toBe(-15)
   })
 })
 
@@ -52,6 +56,15 @@ describe('execCode with the shipped solution.js', () => {
     expect(results.every((r) => r.passed)).toBe(false)
   })
 
+  it('all three implementations handle negative n consistently', () => {
+    const results = execCode(solutionCode, -5)
+    expect(results).toHaveLength(3)
+    for (const r of results) {
+      expect(r.passed, `${r.name} → ${r.value}`).toBe(true)
+      expect(r.value).toBe(-15)
+    }
+  })
+
   it('returns a single Error result when the code cannot compile', () => {
     const results = execCode('this is not valid js {{{', 5)
     expect(results).toHaveLength(1)
@@ -60,20 +73,15 @@ describe('execCode with the shipped solution.js', () => {
 })
 
 describe('validateCustomInput', () => {
-  it('accepts a valid, unique, non-negative integer', () => {
+  it('accepts a valid, unique integer', () => {
     expect(validateCustomInput('7', [])).toEqual({ ok: true, value: 7 })
+    expect(validateCustomInput('-7', [])).toEqual({ ok: true, value: -7 })
   })
 
   it('rejects non-integer input', () => {
     expect(validateCustomInput('abc', [])).toMatchObject({ ok: false })
     expect(validateCustomInput('3.5', [])).toMatchObject({ ok: false })
     expect(validateCustomInput('', [])).toMatchObject({ ok: false })
-  })
-
-  it('rejects negative n per the assumption', () => {
-    const res = validateCustomInput('-5', [])
-    expect(res.ok).toBe(false)
-    if (!res.ok) expect(res.error).toMatch(/>= 0/)
   })
 
   it('rejects duplicates of built-in or existing custom cases', () => {
