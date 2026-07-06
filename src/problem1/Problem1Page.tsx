@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from 'react'
+import { useState, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Editor from '@monaco-editor/react'
 import './Problem1Page.scss'
@@ -29,27 +29,22 @@ export default function Problem1Page({
   // Resize state
   const [leftWidth, setLeftWidth] = useState(288)
   const [rightWidth, setRightWidth] = useState(400)
-  const dragging = useRef<'left' | 'right' | null>(null)
-  const startX = useRef(0)
-  const startWidth = useRef(0)
 
   const handleMouseDown = (side: 'left' | 'right') => (e: React.MouseEvent) => {
     e.preventDefault()
-    dragging.current = side
-    startX.current = e.clientX
-    startWidth.current = side === 'left' ? leftWidth : rightWidth
+    const startX = e.clientX
+    const startWidth = side === 'left' ? leftWidth : rightWidth
 
     const handleMouseMove = (ev: MouseEvent) => {
-      const delta = ev.clientX - startX.current
-      if (dragging.current === 'left') {
-        setLeftWidth(Math.max(200, Math.min(500, startWidth.current + delta)))
+      const delta = ev.clientX - startX
+      if (side === 'left') {
+        setLeftWidth(Math.max(200, Math.min(500, startWidth + delta)))
       } else {
-        setRightWidth(Math.max(280, Math.min(600, startWidth.current - delta)))
+        setRightWidth(Math.max(280, Math.min(600, startWidth - delta)))
       }
     }
 
     const handleMouseUp = () => {
-      dragging.current = null
       document.removeEventListener('mousemove', handleMouseMove)
       document.removeEventListener('mouseup', handleMouseUp)
       document.body.style.cursor = ''

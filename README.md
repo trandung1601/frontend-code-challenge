@@ -1,74 +1,120 @@
-# Frontend Code Challenge
+# Frontend Code Challenge  <!-- omit in toc -->
 
-An interactive coding challenge application built with React, TypeScript, and Vite. Users solve problems directly in the browser with a Monaco code editor and instant test feedback.
+[![License: MIT][license-badge]][license-docs]
+[![Lint and Test][lint-test-badge]][lint-test-workflow]
 
-## Tech Stack
+A frontend interview challenge workspace built with React, TypeScript, and
+Vite. The application is organized by problem folder, where each problem is
+self-contained with its own page, supporting logic, and related assets, while
+shared app wiring and tooling live at the repository root.
 
-- **React 19** + **TypeScript 5.8**
-- **Vite 6** (build tool)
-- **Tailwind CSS 4** (styling)
-- **React Router v7** (routing)
-- **Monaco Editor** (in-browser code editor)
-- **Vitest** (testing)
-- **ESLint** (linting)
+-   Interactive problem pages can be developed and reviewed independently
+-   A single `npm install` at the root sets up the entire frontend workspace
+-   Root-level scripts cover local development, testing, linting, build, and deployment
+-   `problem1` ships with an in-browser Monaco editor and test runner for live coding
+
+## Table of Contents  <!-- omit in toc -->
+
+- [Getting Started](#getting-started)
+- [Problems](#problems)
+- [Building and Testing](#building-and-testing)
+- [Contribution Guidelines](#contribution-guidelines)
+- [Feedback](#feedback)
+- [About](#about)
+  - [Maintainers](#maintainers)
+  - [Contributors](#contributors)
+  - [License](#license)
 
 ## Getting Started
 
 ```bash
-# Install dependencies
 npm install
-
-# Start development server
 npm run dev
-
-# Build for production
-npm run build
-
-# Preview production build
-npm run preview
 ```
 
-## Available Scripts
+Running `npm install` at the repository root installs all dependencies for the
+frontend app. `npm run dev` then starts the local Vite development server so
+you can open and work through the challenge in the browser.
 
-| Script | Description |
-| --- | --- |
-| `npm run dev` | Start Vite dev server |
-| `npm run build` | Type-check and build for production |
-| `npm run preview` | Preview the production build |
-| `npm run lint` | Run ESLint |
-| `npm run lint:fix` | Run ESLint with auto-fix |
-| `npm run test` | Run tests (single run) |
-| `npm run test:watch` | Run tests in watch mode |
-
-## Project Structure
-
-```
-src/
-├── problem1/          # Problem 1: Three ways to sum to n
-│   ├── Problem1Page.tsx
-│   ├── solution.js
-│   ├── runner.ts
-│   └── runner.test.ts
-├── problem2/          # Problem 2: Fancy Form (Swap Token Demo)
-│   └── Problem2Page.tsx
-├── problem3/          # Problem 3: Messy React (Code Review)
-│   ├── Problem3Page.tsx   # shell: theme, top bar, hero, tab nav
-│   ├── components/
-│   │   ├── layout/        # TopBar, Hero (page chrome)
-│   │   └── tabs/          # Overview / Issues / Refactored / Explanation
-│   ├── reviewContent.ts   # findings, code snippets, flow & explanation content
-│   └── highlight.tsx      # tiny TS syntax highlighter
-├── App.tsx            # Root component with routing
-├── HomePage.tsx       # Landing page
-└── main.tsx           # Entry point
+```text
+frontend-code-challenge/
+├── package.json
+├── package-lock.json
+├── README.md
+├── src/
+│   ├── problem1/
+│   ├── problem2/
+│   ├── problem3/
+│   ├── App.tsx
+│   ├── HomePage.tsx
+│   └── main.tsx
+└── dist/
 ```
 
 ## Problems
 
-### Problem 1 — Three Ways to Sum to N
+- `problem1`: Three ways to sum to `n`, with a Monaco editor, test runner, and custom test cases in [src/problem1](src/problem1)
+- `problem2`: polished token swap UI demo in [src/problem2](src/problem2)
+- `problem3`: code review and refactor presentation for a messy React component in [src/problem3](src/problem3)
 
-Implement 3 unique functions that compute the summation from 1 to `n`. Includes a live code editor with test runner and custom test case support.
+`problem1` is the most interactive deliverable: users can edit JavaScript
+implementations directly in the browser and validate them immediately. `problem3`
+is structured as a review artifact with findings, refactor notes, explanation
+content, and presentational components.
 
-### Problem 2 — Fancy Form (Swap Token)
+## Building and Testing
 
-A polished currency-swap form UI demo with token selection. **Note:** This page is for demo purposes only — no real data or transactions are involved.
+All commands are run from the repository root:
+
+| Command | Description |
+| ------- | ----------- |
+| `npm run dev` | Start the Vite development server |
+| `npm test` | Run the Vitest suite once |
+| `npm run test:watch` | Run Vitest in watch mode |
+| `npm run lint` | Run ESLint across the codebase |
+| `npm run lint:fix` | Run ESLint with automatic fixes |
+| `npm run build` | Type-check and build the production bundle into `dist/` |
+| `npm run preview` | Build the app, then preview it with Wrangler locally |
+| `npm run deploy` | Build the app, then deploy it with Wrangler |
+
+To run the app in a production-like local mode:
+
+```bash
+npm run build
+npm run preview
+```
+
+> `preview` runs a fresh production build before starting the local preview. For
+> iterative development, use `npm run dev` instead so changes reload immediately.
+
+## Contribution Guidelines
+
+This repository is an interview challenge deliverable and is not open for
+external contributions. Feel free to fork it for your own use.
+
+## Feedback
+
+You can leave your feedback in the [issues channel][issues].
+
+## About
+
+### Maintainers
+
+- [Tran Tien Dung][profile]
+
+### Contributors
+
+- [Tran Tien Dung][profile]
+
+### License
+
+[![License: MIT][license-badge]][license-docs]
+
+Distributed under the [MIT License](LICENSE).
+
+[license-docs]: LICENSE
+[license-badge]: https://img.shields.io/badge/License-MIT-informational
+[lint-test-badge]: https://github.com/trandung1601/frontend-code-challenge/actions/workflows/lint.yml/badge.svg?branch=main
+[lint-test-workflow]: https://github.com/trandung1601/frontend-code-challenge/actions/workflows/lint.yml
+[profile]: https://github.com/trandung1601
+[issues]: https://github.com/trandung1601/frontend-code-challenge/issues

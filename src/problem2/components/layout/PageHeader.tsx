@@ -42,6 +42,7 @@ export default function PageHeader({
   const [networkOpen, setNetworkOpen] = useState(false)
   const [pendingNetwork, setPendingNetwork] = useState<Network | null>(null)
   const wrapRef = useRef<HTMLDivElement>(null)
+  const walletPanelOpen = open && Boolean(wallet)
 
   const totalUsd = tokens.reduce((sum, t) => sum + t.balance * t.price, 0)
   const topTokens = [...tokens]
@@ -50,16 +51,13 @@ export default function PageHeader({
     .slice(0, 5)
 
   useEffect(() => {
-    if (!open) return
+    if (!walletPanelOpen) return
     function onOutside(e: MouseEvent) {
       if (wrapRef.current && !wrapRef.current.contains(e.target as Node)) setOpen(false)
     }
     document.addEventListener('mousedown', onOutside)
     return () => document.removeEventListener('mousedown', onOutside)
-  }, [open])
-
-  // Close panel when wallet disconnects
-  useEffect(() => { if (!wallet) setOpen(false) }, [wallet])
+  }, [walletPanelOpen])
 
   function copyAddress() {
     if (!wallet) return
@@ -118,11 +116,11 @@ export default function PageHeader({
               )}
               <FiChevronDown
                 className="flux-wallet-chevron"
-                style={{ transform: open ? 'rotate(180deg)' : undefined }}
+                style={{ transform: walletPanelOpen ? 'rotate(180deg)' : undefined }}
               />
             </button>
 
-            {open && (
+            {walletPanelOpen && (
               <div className="flux-wallet-panel flux-card">
                 {/* Top: wallet name + disconnect icon */}
                 <div className="flux-wp-header">
