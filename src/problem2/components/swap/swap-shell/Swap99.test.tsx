@@ -97,7 +97,7 @@ describe('<Swap99 />', () => {
       act(() => vi.advanceTimersByTime(1700))
       expect(screen.getByText('Swap complete')).toBeInTheDocument()
       expect(props.onRecordSwap).toHaveBeenCalledTimes(1)
-      expect(props.onRecordSwap.mock.calls[0][0]).toMatchObject({
+      expect(vi.mocked(props.onRecordSwap).mock.calls[0][0]).toMatchObject({
         fromSym: 'ETH',
         toSym: 'USDC',
         fromAmount: 2,

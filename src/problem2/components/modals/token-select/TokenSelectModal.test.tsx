@@ -70,7 +70,7 @@ describe('<TokenSelectModal />', () => {
 
     fireEvent.click(screen.getByText('ATOM').closest('button')!)
     expect(props.onSelect).toHaveBeenCalledTimes(1)
-    expect(props.onSelect.mock.calls[0][0]).toMatchObject({ symbol: 'ATOM' })
+    expect(vi.mocked(props.onSelect).mock.calls[0][0]).toMatchObject({ symbol: 'ATOM' })
   })
 
   it('closes on Escape', () => {
