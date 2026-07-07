@@ -45,59 +45,207 @@ Overview, Issues, Refactored Code, and Explanation tabs.
 The filter declares `balancePriority` but checks `lhsPriority`, which does not
 exist in scope. This throws a `ReferenceError` at runtime.
 
-Fix: reference the declared variable with `if (balancePriority > -99)`.
+```tsx
+// ❌ Before: declares `balancePriority` but checks `lhsPriority`
+const balancePriority = getPriority(balance.blockchain);
+if (lhsPriority > -99) { // ReferenceError: lhsPriority is not defined
+  ...
+}
+
+// ✅ After: reference the declared variable
+const balancePriority = getPriority(balance.blockchain);
+if (balancePriority > -99) {
+  ...
+}
+```
 
 **2. Inverted filter keeps empty balances**
 
 The filter returns `true` when `amount <= 0`, so it keeps only zero or negative
 balances and discards real balances.
 
-Fix: `return getPriority(balance.blockchain) > -99 && balance.amount > 0`.
+```tsx
+// ❌ Before: keeps only empty/negative balances
+if (balancePriority > -99) {
+  if (balance.amount <= 0) {
+    return true;
+  }
+}
+return false;
+
+// ✅ After: keep prioritized balances with a positive amount
+return getPriority(balance.blockchain) > -99 && balance.amount > 0;
+```
 
 **3. Missing `blockchain` property on `WalletBalance`**
 
 `getPriority(balance.blockchain)` is called repeatedly, but the interface only
 declares `currency` and `amount`.
 
-Fix: add `blockchain: Blockchain` to the interface.
+```tsx
+// ❌ Before: `blockchain` is read but never declared
+interface WalletBalance {
+  currency: string;
+  amount: number;
+}
+
+// ✅ After: declare the property that is actually used
+interface WalletBalance {
+  currency: string;
+  amount: number;
+  blockchain: Blockchain;
+}
+```
 
 **4. Unsafe cast in the `rows` mapping**
 
 `rows` maps over `sortedBalances` but types each item as
 `FormattedWalletBalance`, then reads `balance.formatted`, which was never added.
 
-Fix: render from the formatted list.
+```tsx
+// ❌ Before: sortedBalances items have no `formatted` field
+const rows = sortedBalances.map(
+  (balance: FormattedWalletBalance, index: number) => {
+    ...
+    formattedAmount={balance.formatted} // undefined at runtime
+  })
+
+// ✅ After: render from the formatted list
+const rows = formattedBalances.map((balance) => (
+  <WalletRow ... formattedAmount={balance.formatted} />
+));
+```
 
 **5. `formattedBalances` computed but never used**
 
 A full mapping pass builds `formattedBalances`, but the UI maps over
 `sortedBalances`, wasting work and losing formatted values.
 
-Fix: render from `formattedBalances`, or fold formatting into one memoized
-pipeline.
+```tsx
+// ❌ Before: formattedBalances is built, then ignored by the render
+const formattedBalances = sortedBalances.map((balance) => ({
+  ...balance,
+  formatted: balance.amount.toFixed(),
+}));
+const rows = sortedBalances.map(...); // uses sortedBalances, not formattedBalances
+
+// ✅ After: render from formattedBalances (or fold into one memoized pipeline)
+const rows = formattedBalances.map(...);
+```
 
 ## Warnings
 
-- **Sort comparator missing equality:** return a numeric equality case with
-  `getPriority(rhs.blockchain) - getPriority(lhs.blockchain)`.
+- **Sort comparator missing equality:** the comparator returns `undefined` when
+  priorities are equal, giving unstable ordering.
+
+  ```tsx
+  // ❌ Before: no return for the equal case
+  if (leftPriority > rightPriority) return -1;
+  else if (rightPriority > leftPriority) return 1;
+  // (implicitly returns undefined when equal)
+
+  // ✅ After: a single numeric difference covers all cases
+  return getPriority(rhs.blockchain) - getPriority(lhs.blockchain);
+  ```
+
 - **`blockchain` typed as `any`:** use a string-literal union and a priority
   lookup table.
-- **Array index used as React key:** use a stable key such as
-  ``${balance.blockchain}-${balance.currency}``.
-- **`children` destructured but never rendered:** render `{children}` or remove
-  it from the props contract.
-- **Unnecessary `prices` dependency:** avoid re-running sort logic on price-only
-  changes when prices are not read by that memo.
-- **Repeated priority calls during sort:** precompute priority or use an O(1)
-  lookup table.
+
+  ```tsx
+  // ❌ Before
+  const getPriority = (blockchain: any): number => { ... }
+
+  // ✅ After
+  type Blockchain = 'Osmosis' | 'Ethereum' | 'Arbitrum' | 'Zilliqa' | 'Neo';
+  const getPriority = (blockchain: Blockchain): number =>
+    BLOCKCHAIN_PRIORITY[blockchain] ?? -99;
+  ```
+
+- **Array index used as React key:** index keys break reconciliation when the
+  list reorders.
+
+  ```tsx
+  // ❌ Before
+  <WalletRow key={index} ... />
+
+  // ✅ After: stable, content-based key
+  <WalletRow key={`${balance.blockchain}-${balance.currency}`} ... />
+  ```
+
+- **`children` destructured but never rendered:** `children` is pulled off props
+  but dropped, so nested content silently disappears.
+
+  ```tsx
+  // ❌ Before
+  const { children, ...rest } = props;
+  return <div {...rest}>{rows}</div>; // children never rendered
+
+  // ✅ After
+  return <div {...rest}>{rows}{children}</div>;
+  ```
+
+- **Unnecessary `prices` dependency:** the sort memo lists `prices` but never
+  reads it, so it re-runs on price-only changes.
+
+  ```tsx
+  // ❌ Before: prices is not used inside, but triggers recomputation
+  useMemo(() => balances.filter(...).sort(...), [balances, prices]);
+
+  // ✅ After: depend only on what the memo reads
+  useMemo(() => balances.filter(...).sort(...), [balances]);
+  ```
+
+- **Repeated priority calls during sort:** `getPriority` runs twice per
+  comparison. Precompute priority or use an O(1) lookup table.
+
+  ```tsx
+  // ❌ Before: recomputed on every comparison (O(n log n) calls)
+  .sort((lhs, rhs) => getPriority(lhs.blockchain) - getPriority(rhs.blockchain))
+
+  // ✅ After: O(1) lookup from a precomputed table
+  const BLOCKCHAIN_PRIORITY: Record<Blockchain, number> = { ... };
+  ```
 
 ## Improvements
 
-- Type component props once instead of combining `React.FC<Props>` with
+- **Type component props once** instead of combining `React.FC<Props>` with
   `(props: Props)`.
-- Hoist `getPriority` and the priority table to module scope.
-- Memoize formatting and USD value calculation with the sorted balance pipeline.
-- Replace separate filter, sort, and mapping work with one clear memoized flow.
+
+  ```tsx
+  // ❌ Before
+  const WalletPage: React.FC<Props> = (props: Props) => {
+    const { children, ...rest } = props;
+
+  // ✅ After
+  const WalletPage = ({ children, ...rest }: Props) => {
+  ```
+
+- **Hoist `getPriority` and the priority table to module scope** so they are not
+  recreated on every render.
+
+  ```tsx
+  // ✅ After: defined once at module scope
+  const BLOCKCHAIN_PRIORITY: Record<Blockchain, number> = { ... };
+  const getPriority = (blockchain: Blockchain): number =>
+    BLOCKCHAIN_PRIORITY[blockchain] ?? -99;
+  ```
+
+- **Memoize formatting and USD value calculation** together with the sorted
+  balance pipeline.
+
+  ```tsx
+  // ✅ After: filter → sort → format in one memoized pass
+  const formattedBalances = useMemo(() =>
+    balances.filter(...).sort(...).map((balance) => ({
+      ...balance,
+      formatted: balance.amount.toFixed(2),
+      usdValue: (prices[balance.currency] ?? 0) * balance.amount,
+    })),
+  [balances, prices]);
+  ```
+
+- **Replace separate filter, sort, and mapping work** with one clear memoized
+  flow (see the refactored code below).
 
 ## Original Code
 

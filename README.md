@@ -38,17 +38,31 @@ you can open and work through the challenge in the browser.
 
 ```text
 frontend-code-challenge/
-├── package.json
-├── package-lock.json
-├── README.md
+├── dist/                  # build output
 ├── src/
 │   ├── problem1/          # algorithm playground
 │   ├── problem2/          # swap UI, grouped by feature folders
 │   ├── problem3/          # review dashboard, grouped by tab folders
+│   ├── styles/            # shared base styles
+│   ├── App.scss
 │   ├── App.tsx
+│   ├── constants.ts
+│   ├── HomePage.scss
 │   ├── HomePage.tsx
-│   └── main.tsx
-└── dist/
+│   ├── index.css
+│   ├── main.tsx
+│   └── vite-env.d.ts
+├── eslint.config.js
+├── index.html
+├── LICENSE
+├── package-lock.json
+├── package.json
+├── README.md
+├── tsconfig.app.json
+├── tsconfig.json
+├── tsconfig.node.json
+├── vite.config.ts
+└── wrangler.jsonc
 ```
 
 ## Problems
